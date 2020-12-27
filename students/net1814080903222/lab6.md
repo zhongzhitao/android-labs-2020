@@ -13,14 +13,62 @@
 
 ## 三、实验步骤
 
-1. 编写下载图片弹窗布局和代码文件dialog_download.xml与DownloadDialog.java；
-2. 在页面布局xml内添加打开下载窗口的代码；
-3. 查看效果。
+1. 开放网络权限
+
+    ``` xml
+    <uses-permission android:name="android.permission.INTERNET" />
+    ```
+
+2. 编写下载图片弹窗布局和代码文件dialog_download.xml；
+3. 在页面布局xml内添加打开下载窗口的代码；
+
+    ``` java
+    binding.downloadBtn.setOnClickListener(this::showDownloadDialog);
+
+    public void showDownloadDialog(View v) {
+        DownloadDialog dialog = new DownloadDialog();
+        dialog.show(getParentFragmentManager(), "DOWNLOAD");
+    }
+    ```
+
+4. Dialog内操作Glide进行图片的下载和载入ImageView
+
+   ``` java
+    public class DownloadDialog extends DialogFragment {
+        private EditText urlInput;
+        private ImageView imageView;
+
+        @NonNull
+        @NotNull
+        @Override
+        public Dialog onCreateDialog(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+            LayoutInflater inflater = requireActivity().getLayoutInflater();
+            DialogDownloadBinding binding = DialogDownloadBinding.inflate(inflater, null, false);
+            urlInput = binding.url;
+            imageView = binding.image;
+
+            // 此处完成图片的下载和载入
+            binding.btn.setOnClickListener(view -> {
+                Glide.with(this).load(urlInput.getText().toString()).into(imageView);
+            });
+
+            builder.setView(binding.getRoot())
+                    .setTitle(R.string.settings_download_button_text)
+                    .setNegativeButton(R.string.download_dialog_close,
+                            (dialog, id) -> Objects.requireNonNull(DownloadDialog.this.getDialog()).cancel());
+            return builder.create();
+        }
+    }
+   ```
+
+5. 查看效果。
 
 ## 四、实验结果
 
-![UI](https://raw.githubusercontent.com/zhongzhitao/android-labs-2020/master/students/net1814080903211/lab6.png)
-![dialog](https://raw.githubusercontent.com/zhongzhitao/android-labs-2020/master/students/net1814080903211/lab6-1.png)
+![UI](https://raw.githubusercontent.com/zhongzhitao/android-labs-2020/master/students/net1814080903222/lab6.png)
+![dialog](https://raw.githubusercontent.com/zhongzhitao/android-labs-2020/master/students/net1814080903222/lab6-1.png)
 
 ## 五、实验心得
 

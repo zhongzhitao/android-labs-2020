@@ -24,7 +24,7 @@
 
 ## 四、实验结果
 
-![result](https://raw.githubusercontent.com/zhongzhitao/android-labs-2020/master/students/net1814080903211/lab1.png)
+![result](https://raw.githubusercontent.com/zhongzhitao/android-labs-2020/master/students/net1814080903222/lab1.png)
 
 ## 五、实验心得
 
